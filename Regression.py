@@ -49,9 +49,9 @@ print("Predicted speed of a 10 year old car:", speed1) # You can also read this 
 
 
 '''
-##################################################
+####################################################################################################
 Polynomial Regression. This is to be used if your data points will clearly not fit a linear regression (straight line).
-##################################################
+####################################################################################################
 '''
 
 # Lets say we have a dataset where:
