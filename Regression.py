@@ -31,24 +31,27 @@ plt.scatter(x, y) # plots original data
 plt.plot(x, exampleModel) # plots the regression line
 plt.show()
 
-### NB. stats.lingress returns 5 values as a tuple. so you can print slope, r, etc or similarly you can type :
-### result = stats.linregress(x, y) and slope = result[0], intercept = result[1] etc...
+### NB. stats.lingress returns 5 values as a tuple. so you can print slope, r, etc. or similarly you can type :
+# result = stats.linregress(x, y) and slope = result[0], intercept = result[1] etc... ###
 
-'''
-R. This shows relationship. 0 means no relationship whereas 1 and -1 means 100% related.
-'''
+
+''' R. This shows relationship. 0 means no relationship whereas 1 and -1 means 100% related. '''
+
 print("Relationship between x and y:", r)
 
-'''
-Predicting future values. We can now use the info we gathered to predict future values.
-'''
-# lets predict the speed of a 10-year-old car
+# Predicting future values. We can now use the info we gathered to predict future values.
+
+# let's predict the speed of a 10-year-old car
 
 speed1 = funct(10)
-print("Predicted speed of a 10 year old car:", speed1) # You can also read this value from the graph !!
+print("Predicted speed of a 10 year old car:", speed1) # You can also read this value from the graph!!
+
+
 
 '''
+##################################################
 Polynomial Regression. This is to be used if your data points will clearly not fit a linear regression (straight line).
+##################################################
 '''
 
 # Lets say we have a dataset where:
@@ -64,3 +67,16 @@ myline = numpy.linspace(1,22,100) # 100 evenly spaced points from 1-22, creates 
 plt.scatter(x, y)
 plt.plot(myline, polymodel(myline))
 plt.show()
+
+### Like before, it is important to know the relationship between X and Y. No relationship = bad/no prediction.
+### Here we measure with a value called R squared. Sklearn will compute this for you.
+
+from sklearn.metrics import r2_score
+print("R-Squared:", r2_score(y, polymodel(x))) # 0-1, 0 meaning no relationship and 1 meaning 100% related
+
+# A score of 0.94 shows a very good relationship so we can use polynomial regression in future predictions
+
+### Example. Predict the speed of a car passing the tollbooth at 17:00:
+
+speed = polymodel(17)
+print("Predicted speed of a car passing at 17:00:", speed) # this can also be read from the diagram
