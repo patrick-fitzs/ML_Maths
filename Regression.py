@@ -9,6 +9,7 @@ In ML and statistical modeling, that relationship is used to predict the outcome
 import matplotlib.pyplot as plt
 import numpy
 from scipy import stats
+from sklearn import linear_model
 
 # Sample data
 x = [5,7,8,7,2,17,2,9,4,11,12,9,6] # age of cars
@@ -80,3 +81,38 @@ print("R-Squared:", r2_score(y, polymodel(x))) # 0-1, 0 meaning no relationship 
 
 speed = polymodel(17)
 print("Predicted speed of a car passing at 17:00:", speed) # this can also be read from the diagram
+
+
+'''
+####################################################################################################
+Multiple Regression. This is like Linear Regression, but with more than one independent variable, meaning we're predicting based on two or more variables.
+####################################################################################################
+'''
+# Here we will be using a data set containing the following, 'Car', 'Model', 'Volume', 'Weight', 'CO2'.
+# We will also use Sklearn for the Linear model
+import pandas # allows us to load and read CSV files
+
+df = pandas.read_csv("DataSets/data.csv") # Loading the CSV
+
+X = df[['Weight', 'Volume']] # Assigning the independent values to X and dependent values to y
+y = df['CO2']
+
+regr = linear_model.LinearRegression() # Creates a linear regression object
+regr.fit(X, y) # the fit() method fills the regression object with X and y as parameters
+
+# Here we will predict the CO2 of a var that weights 2300kg and is 1.3L
+predictedCO2 = regr.predict([[2300, 1300]]) # This type of car will release approx 107grams of CO2 for every KM it drives
+# Not you may get a warning as we fit our model with a pd df but pass plain values.
+print("A 2300kg, 1.3L car could have a CO2 level of:", predictedCO2)
+
+### Coefficient ###
+print("Our Multiple regression models Coefficients:", regr.coef_)
+
+# These numbers mean if we increase our X params respectively, the CO2 increases by that amount.
+
+# Proof
+newpredictedCO2 = regr.predict([[3300, 1300]])
+print("A 3300kg, 1.3L car could have a CO2 level of:",newpredictedCO2)
+increase = regr.coef_[0] * 1000 # Our coefficient times 1000(kg)
+
+print("This figure should equal our 2300kg car to prove", newpredictedCO2 - increase)
